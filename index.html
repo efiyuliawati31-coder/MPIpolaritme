@@ -1,0 +1,1353 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MPI Seni Rupa Kelas 5 - Pola dan Ritme Batik | Efi Yuliawati</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        lavender: {
+                            DEFAULT: '#8A70D6',
+                            light: '#A692E2',
+                            dark: '#6C53B7',
+                            soft: '#F2EEFC'
+                        },
+                        tosca: {
+                            DEFAULT: '#4ECDC4',
+                            dark: '#36B3AA',
+                            light: '#E0F7F5'
+                        },
+                        softpink: {
+                            DEFAULT: '#FF8B94',
+                            light: '#FFEBEF'
+                        },
+                        butter: {
+                            DEFAULT: '#FFF59D',
+                            dark: '#FBC02D'
+                        },
+                        darkslate: '#2D3142'
+                    },
+                    fontFamily: {
+                        sans: ['Nunito', 'sans-serif'],
+                        heading: ['Poppins', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: linear-gradient(135deg, #1e1e2f 0%, #2a2a40 100%);
+            color: #2D3142;
+            user-select: none;
+            overflow-x: hidden;
+        }
+
+        /* Aspect ratio 16:9 container constraints */
+        .ratio-16-9-container {
+            width: 100%;
+            max-width: 1280px;
+            aspect-ratio: 16 / 9;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
+        }
+
+        @media (max-aspect-ratio: 16/9) {
+            .ratio-16-9-container {
+                height: auto;
+            }
+        }
+
+        /* Custom Scrollbar for inner cards */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(0,0,0,0.05);
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #8A70D6;
+            border-radius: 10px;
+        }
+
+        /* Animated pulse & hover effects */
+        .btn-pill {
+            transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .btn-pill:hover {
+            transform: translateY(-3px) scale(1.03);
+            box-shadow: 0 10px 20px -5px rgba(138, 112, 214, 0.4);
+        }
+        .btn-pill:active {
+            transform: translateY(1px) scale(0.98);
+        }
+
+        .slide-transition {
+            transition: opacity 0.35s ease-in-out, transform 0.35s ease-in-out;
+        }
+
+        /* Interactive Batik SVG grid animations */
+        @keyframes pulseRhythm {
+            0% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.06); opacity: 1; }
+            100% { transform: scale(1); opacity: 0.8; }
+        }
+        .pulse-element {
+            animation: pulseRhythm 3s infinite ease-in-out;
+        }
+
+        @keyframes cloudFlow {
+            0% { transform: translateX(0px); }
+            50% { transform: translateX(12px); }
+            100% { transform: translateX(0px); }
+        }
+        .cloud-flow {
+            animation: cloudFlow 4s infinite ease-in-out;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-2 sm:p-4 md:p-6">
+
+    <!-- MAIN APP CONTAINER (16:9 Landscape Frame) -->
+    <div class="ratio-16-9-container bg-white rounded-3xl overflow-hidden flex flex-col relative border-4 border-lavender/30 shadow-2xl">
+        
+        <!-- TOP CONTROL & PROGRESS HEADER BAR -->
+        <header class="bg-gradient-to-r from-lavender-dark via-lavender to-tosca-dark text-white px-4 py-2.5 flex items-center justify-between shadow-md z-30 select-none">
+            <div class="flex items-center space-x-3">
+                <div class="bg-white/20 p-2 rounded-xl backdrop-blur-md flex items-center justify-center">
+                    <i class="fa-solid fa-palette text-butter text-lg"></i>
+                </div>
+                <div>
+                    <h1 class="font-heading font-bold text-sm sm:text-base leading-tight tracking-wide">Pola & Ritme Batik Nusantara</h1>
+                    <p class="text-xs text-white/80 hidden sm:block">Seni Rupa Kelas 5 SD • SD Negeri Gegunung Kulon</p>
+                </div>
+            </div>
+
+            <!-- Slide Progress Badge & Control Buttons -->
+            <div class="flex items-center space-x-2 sm:space-x-3">
+                <div class="bg-black/20 px-3 py-1 rounded-full text-xs font-semibold text-butter border border-white/20">
+                    <span id="slide-number">Slide 1</span> / 25
+                </div>
+
+                <button id="btn-sound" onclick="toggleAudio()" class="w-9 h-9 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center transition text-white" title="Suara Efek (ON/OFF)">
+                    <i id="sound-icon" class="fa-solid fa-volume-high"></i>
+                </button>
+
+                <button onclick="goToSlide(2)" class="w-9 h-9 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center transition text-white" title="Menu Utama">
+                    <i class="fa-solid fa-house"></i>
+                </button>
+
+                <button onclick="toggleFullscreen()" class="w-9 h-9 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center transition text-white hidden sm:flex" title="Layar Penuh">
+                    <i class="fa-solid fa-expand"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- SLIDE CONTENT VIEWPORT -->
+        <main id="slide-viewport" class="flex-1 relative bg-slate-50 overflow-hidden flex flex-col">
+            <!-- Dynamic slides will be loaded/toggled here -->
+        </main>
+
+        <!-- GLOBAL FOOTER BAR WITH COMPANION MEGA DIALOGUE -->
+        <footer class="bg-white border-t border-slate-200 px-4 py-2 flex items-center justify-between z-20 shadow-lg">
+            <!-- Character Mega Banner -->
+            <div class="flex items-center space-x-3 max-w-xl">
+                <div class="relative flex-shrink-0">
+                    <!-- Avatar SVG Character Mega -->
+                    <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gradient-to-tr from-tosca to-lavender p-0.5 shadow-md flex items-center justify-center">
+                        <svg class="w-full h-full rounded-full bg-butter/30" viewBox="0 0 100 100" fill="none">
+                            <circle cx="50" cy="50" r="45" fill="#FFEBEF"/>
+                            <!-- Hair -->
+                            <path d="M25 50 C25 25, 75 25, 75 50 C75 60, 75 75, 70 80 C60 70, 40 70, 30 80 C25 75, 25 60, 25 50 Z" fill="#2D3142"/>
+                            <!-- Face -->
+                            <ellipse cx="50" cy="55" rx="22" ry="24" fill="#FFD1B3"/>
+                            <!-- Hair band -->
+                            <path d="M28 42 Q50 32 72 42" stroke="#4ECDC4" stroke-width="6" stroke-linecap="round"/>
+                            <!-- Eyes -->
+                            <circle cx="42" cy="53" r="3.5" fill="#2D3142"/>
+                            <circle cx="58" cy="53" r="3.5" fill="#2D3142"/>
+                            <circle cx="43.5" cy="51.5" r="1" fill="white"/>
+                            <circle cx="59.5" cy="51.5" r="1" fill="white"/>
+                            <!-- Smile -->
+                            <path d="M44 64 Q50 70 56 64" stroke="#E57373" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+                            <!-- Cheeks -->
+                            <ellipse cx="37" cy="60" rx="3" ry="2" fill="#FF8B94" opacity="0.6"/>
+                            <ellipse cx="63" cy="60" rx="3" ry="2" fill="#FF8B94" opacity="0.6"/>
+                            <!-- Batik Vest shoulders -->
+                            <path d="M26 88 C35 78, 65 78, 74 88 L80 100 L20 100 Z" fill="#8A70D6"/>
+                            <path d="M38 80 L50 90 L62 80" stroke="#FFF59D" stroke-width="2" fill="none"/>
+                        </svg>
+                    </div>
+                    <span class="absolute -bottom-1 -right-1 bg-tosca text-white text-[9px] font-extrabold px-1.5 py-0.2 rounded-full border border-white">MEGA</span>
+                </div>
+                <div class="bg-lavender-soft/80 border border-lavender/20 rounded-2xl px-3 py-1.5 text-xs text-darkslate shadow-sm">
+                    <p id="mega-dialogue" class="line-clamp-2 font-medium italic text-slate-700">
+                        "Halo! Aku Mega. Mari belajar keindahan pola dan ritme motif Batik Nusantara bersama!"
+                    </p>
+                </div>
+            </div>
+
+            <!-- Global Quick Nav Controls -->
+            <div class="flex items-center space-x-2">
+                <button id="btn-prev" onclick="prevSlide()" class="btn-pill bg-slate-200 hover:bg-slate-300 text-slate-700 px-3 py-1.5 rounded-full text-xs font-bold flex items-center space-x-1">
+                    <i class="fa-solid fa-chevron-left"></i>
+                    <span class="hidden sm:inline">KEMBALI</span>
+                </button>
+                <button id="btn-next" onclick="nextSlide()" class="btn-pill bg-lavender hover:bg-lavender-dark text-white px-4 py-1.5 rounded-full text-xs font-bold flex items-center space-x-1 shadow-md">
+                    <span class="hidden sm:inline">LANJUT</span>
+                    <i class="fa-solid fa-chevron-right"></i>
+                </button>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- AUDIO SYNTHESIZER & APPLICATION LOGIC -->
+    <script>
+        // --- WEB AUDIO API SOUND SYSTEM ---
+        let audioCtx = null;
+        let soundEnabled = true;
+
+        function initAudio() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+        }
+
+        function playSound(type) {
+            if (!soundEnabled) return;
+            initAudio();
+            if (!audioCtx) return;
+
+            const now = audioCtx.currentTime;
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+
+            if (type === 'click') {
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(400, now);
+                osc.frequency.exponentialRampToValueAtTime(800, now + 0.08);
+                gain.gain.setValueAtTime(0.15, now);
+                gain.gain.linearRampToValueAtTime(0.01, now + 0.08);
+                osc.start(now);
+                osc.stop(now + 0.08);
+            } else if (type === 'correct') {
+                // Happy chord chime (C5 - E5 - G5 - C6)
+                const freqs = [523.25, 659.25, 783.99, 1046.50];
+                freqs.forEach((freq, idx) => {
+                    const o = audioCtx.createOscillator();
+                    const g = audioCtx.createGain();
+                    o.type = 'triangle';
+                    o.frequency.value = freq;
+                    o.connect(g);
+                    g.connect(audioCtx.destination);
+                    const startTime = now + idx * 0.07;
+                    g.gain.setValueAtTime(0.15, startTime);
+                    g.gain.exponentialRampToValueAtTime(0.001, startTime + 0.35);
+                    o.start(startTime);
+                    o.stop(startTime + 0.35);
+                });
+            } else if (type === 'wrong') {
+                // Soft low note drop
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(280, now);
+                osc.frequency.exponentialRampToValueAtTime(140, now + 0.25);
+                gain.gain.setValueAtTime(0.15, now);
+                gain.gain.linearRampToValueAtTime(0.01, now + 0.25);
+                osc.start(now);
+                osc.stop(now + 0.25);
+            } else if (type === 'victory') {
+                // Fanfare notes
+                const notes = [440, 554.37, 659.25, 880];
+                notes.forEach((freq, idx) => {
+                    const o = audioCtx.createOscillator();
+                    const g = audioCtx.createGain();
+                    o.type = 'sine';
+                    o.frequency.value = freq;
+                    o.connect(g);
+                    g.connect(audioCtx.destination);
+                    const startTime = now + idx * 0.1;
+                    g.gain.setValueAtTime(0.2, startTime);
+                    g.gain.exponentialRampToValueAtTime(0.001, startTime + 0.4);
+                    o.start(startTime);
+                    o.stop(startTime + 0.4);
+                });
+            }
+        }
+
+        function toggleAudio() {
+            soundEnabled = !soundEnabled;
+            const icon = document.getElementById('sound-icon');
+            if (soundEnabled) {
+                icon.className = 'fa-solid fa-volume-high';
+                playSound('click');
+            } else {
+                icon.className = 'fa-solid fa-volume-xmark text-red-300';
+            }
+        }
+
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(() => {});
+            } else {
+                if (document.exitFullscreen) document.exitFullscreen();
+            }
+        }
+
+        // --- GLOBAL APP STATE & QUIZ TRACKER ---
+        let currentSlide = 1;
+        const totalSlides = 25;
+        let userScore = 0;
+        let answeredQuestions = [false, false, false, false, false];
+        let quizAnswers = [null, null, null, null, null];
+
+        // Quiz Question Definitions
+        const quizData = [
+            {
+                id: 1,
+                question: "Pengulangan elemen garis, bentuk, atau warna secara teratur dan konsisten dalam karya seni rupa dinamakan...",
+                options: [
+                    { key: 'A', text: 'Pola', correct: true },
+                    { key: 'B', text: 'Sketsa', correct: false },
+                    { key: 'C', text: 'Tekstur', correct: false }
+                ],
+                explanation: "Pola adalah keteraturan visual yang tercipta dari pengulangan bentuk, garis, atau warna secara berulang dan konsisten.",
+                hint: "Ingat kembali, bentuk yang diulang-ulang secara teratur membentuk susunan yang rapi dinamakan pola!",
+                materialSlide: 5
+            },
+            {
+                id: 2,
+                question: "Elemen visual yang disusun sedemikian rupa sehingga mengarahkan gerak pandangan mata kita disebut...",
+                options: [
+                    { key: 'A', text: 'Kontras', correct: false },
+                    { key: 'B', text: 'Ritme (Irama Visual)', correct: true },
+                    { key: 'C', text: 'Proporsi', correct: false }
+                ],
+                explanation: "Ritme atau irama visual memberikan kesan gerakan visual yang memandu alur pandangan mata kita saat menikmati karya.",
+                hint: "Sama seperti alur nada dalam musik, irama visual pada karya seni rupa membuat mata kita seolah bergerak mengalir!",
+                materialSlide: 6
+            },
+            {
+                id: 3,
+                question: "Motif Batik Kawung merupakan contoh nyata penerapan pola geometris teratur yang menggunakan dasar bentuk...",
+                options: [
+                    { key: 'A', text: 'Awan bergelombang dinamis', correct: false },
+                    { key: 'B', text: 'Empat lingkaran berpusat (oval kolang-kaling)', correct: true },
+                    { key: 'C', text: 'Segitiga siku-siku tak beraturan', correct: false }
+                ],
+                explanation: "Batik Kawung terinspirasi dari buah kolang-kaling yang tersusun dari 4 lingkaran/oval berpusat secara geometris simetris.",
+                hint: "Batik Kawung memiliki ciri khas bentuk bulat oval menyerupai buah kolang-kaling yang terbagi empat simetris.",
+                materialSlide: 7
+            },
+            {
+                id: 4,
+                question: "Kesan ritme mengalir yang dinamis pada motif Batik Mega Mendung diciptakan melalui pengulangan bentuk...",
+                options: [
+                    { key: 'A', text: 'Garis lurus patah-patah yang kaku', correct: false },
+                    { key: 'B', text: 'Lengkungan awan bergelombang dengan gradasi warna', correct: true },
+                    { key: 'C', text: 'Kotak-kotak catur berwarna hitam putih', correct: false }
+                ],
+                explanation: "Motif Mega Mendung khas Cirebon menggunakan garis melengkung menyerupai awan dengan lapisan gradasi warna untuk menciptakan ritme dinamis.",
+                hint: "Coba bayangkan bentuk awan mendung di langit Cirebon yang bergelombang dan berlapis-lapis warnanya!",
+                materialSlide: 8
+            },
+            {
+                id: 5,
+                question: "Saat menggambar motif bunga bintang kecil berulang dan menyebar secara seimbang seperti Batik Truntum, kamu menerapkan prinsip...",
+                options: [
+                    { key: 'A', text: 'Pola dan Ritme Keseimbangan', correct: true },
+                    { key: 'B', text: 'Gelap Terang Bayangan 3D', correct: false },
+                    { key: 'C', text: 'Perspektif Satu Titik Hilang', correct: false }
+                ],
+                explanation: "Batik Truntum menyatukan pola pengulangan motif bunga bintang dengan ritme yang menyebar tenang dan seimbang.",
+                hint: "Batik Truntum dipenuhi taburan bunga bintang yang diulang secara rapi dan seimbang di seluruh kain.",
+                materialSlide: 9
+            }
+        ];
+
+        // Dialogue messages for Companion Mega
+        const megaDialogues = {
+            1: "Selamat datang! Yuk klik tombol 'MULAI' untuk menjelajahi keindahan Batik Nusantara!",
+            2: "Pilih menu mana saja yang ingin kamu pelajari terlebih dahulu ya!",
+            3: "Ini adalah target kemampuan yang akan kita kuasai setelah belajar bersama.",
+            4: "Yuk tonton simulasi pembuatan pola & ritme batik dalam video interaktif berikut!",
+            5: "Pola adalah pengulangan teratur. Coba klik tombol di canvas untuk mengubah warnanya!",
+            6: "Lihat bagaimana garis gelombang bergerak! Itulah yang dinamakan ritme atau irama visual.",
+            7: "Batik Kawung sangat simetris! Klik tombol 'Tampilkan Grid' untuk melihat kisi geometrisnya.",
+            8: "Mega Mendung dari Cirebon memiliki ritme awan yang mengalir indah. Geser warnanya!",
+            9: "Batik Truntum seperti bintang di malam hari. Pengulangan kecilnya menghasilkan keseimbangan.",
+            10: "Soal 1: Mari uji pemahamanmu tentang pengertian dasar Pola!",
+            11: "Jawabanmu Benar! Hebat sekali, kamu makin paham konsep pola!",
+            12: "Jangan berkecil hati ya! Yuk baca petunjuk dan coba lagi.",
+            13: "Soal 2: Sekarang ayo kita jawab pertanyaan tentang Ritme!",
+            14: "Luar biasa! Ritme memang mengarahkan pandangan mata kita.",
+            15: "Hampir tepat! Mari pelajari kembali contoh alur irama visual.",
+            16: "Soal 3: Pertanyaan mengenai keunikan motif Batik Kawung!",
+            17: "Tepat sekali! Kawung dibentuk dari 4 lingkaran geometris.",
+            18: "Yuk ingat kembali bentuk buah kolang-kaling yang simetris!",
+            19: "Soal 4: Mari analisa ritme pada Batik Mega Mendung!",
+            20: "Jawaban kamu sempurna! Lengkungan awan memberi kesan ritme bergerak.",
+            21: "Kurang sedikit lagi! Perhatikan alur warna pada bentuk awannya ya.",
+            22: "Soal 5: Pertanyaan terakhir tentang keharmonisan Batik Truntum!",
+            23: "Keren banget! Kamu berhasil menyelesaikan semua soal dengan baik!",
+            24: "Ayo coba sekali lagi! Pengulangan bunga bintang membentuk keseimbangan.",
+            25: "Selamat! Kamu telah menyelesaikan seluruh rangkaian media pembelajaran!"
+        };
+
+        // Render HTML content for all 25 slides dynamically
+        function renderSlide(slideNum) {
+            const viewport = document.getElementById('slide-viewport');
+            document.getElementById('slide-number').innerText = `Slide ${slideNum}`;
+            
+            // Update Mega Dialogue
+            const megaText = megaDialogues[slideNum] || "Mari belajar Seni Rupa dengan gembira!";
+            document.getElementById('mega-dialogue').innerText = `"${megaText}"`;
+
+            let html = '';
+
+            switch(slideNum) {
+                // SLIDE 1: COVER
+                case 1:
+                    html = `
+                    <div class="flex-1 flex flex-col justify-between p-6 sm:p-10 bg-gradient-to-br from-lavender-soft via-white to-tosca-light relative overflow-hidden">
+                        <!-- Background Batik Decorative SVGs -->
+                        <div class="absolute -top-12 -left-12 opacity-10 pointer-events-none">
+                            <svg width="250" height="250" viewBox="0 0 100 100">
+                                <circle cx="50" cy="50" r="40" fill="#8A70D6" />
+                                <path d="M50 10 A40 40 0 0 1 90 50 A40 40 0 0 1 50 90 A40 40 0 0 1 10 50 A40 40 0 0 1 50 10 Z" fill="#4ECDC4"/>
+                            </svg>
+                        </div>
+                        <div class="absolute -bottom-16 -right-16 opacity-10 pointer-events-none">
+                            <svg width="300" height="300" viewBox="0 0 100 100">
+                                <path d="M10 50 Q50 10 90 50 Q50 90 10 50 Z" fill="#FF8B94"/>
+                            </svg>
+                        </div>
+
+                        <!-- Header Info -->
+                        <div class="flex justify-between items-start z-10">
+                            <span class="bg-lavender text-white text-xs sm:text-sm font-bold px-4 py-1.5 rounded-full shadow-sm tracking-wide">
+                                SENI RUPA KELAS 5 SD • FASE C
+                            </span>
+                            <span class="bg-white/80 border border-slate-200 text-slate-600 text-xs font-semibold px-3 py-1 rounded-lg backdrop-blur-sm">
+                                SD Negeri Gegunung Kulon
+                            </span>
+                        </div>
+
+                        <!-- Main Title Section -->
+                        <div class="my-auto text-center z-10 max-w-3xl mx-auto space-y-4">
+                            <div class="inline-block bg-butter text-darkslate text-xs font-extrabold px-3 py-1 rounded-md uppercase tracking-wider shadow-sm border border-butter-dark/30">
+                                Media Pembelajaran Interaktif (MPI)
+                            </div>
+                            <h1 class="font-heading text-3xl sm:text-5xl font-black text-darkslate tracking-tight leading-tight">
+                                POLA & RITME <br/>
+                                <span class="bg-clip-text text-transparent bg-gradient-to-r from-lavender-dark via-lavender to-tosca">
+                                    DALAM BATIK NUSANTARA
+                                </span>
+                            </h1>
+                            <p class="text-sm sm:text-base text-slate-600 max-w-xl mx-auto font-medium">
+                                Eksplorasi Keindahan Pengulangan Teratur dan Irama Visual Motif Kawung, Mega Mendung, dan Truntum.
+                            </p>
+
+                            <!-- Author Card -->
+                            <div class="pt-2 inline-flex items-center space-x-3 bg-white/90 border border-lavender/30 shadow-md px-5 py-2.5 rounded-2xl">
+                                <div class="w-10 h-10 rounded-full bg-lavender text-white flex items-center justify-center font-bold text-sm">
+                                    EY
+                                </div>
+                                <div class="text-left">
+                                    <p class="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Disusun Oleh:</p>
+                                    <p class="text-xs sm:text-sm font-bold text-darkslate">Efi Yuliawati, S.Pd.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Start Button -->
+                        <div class="text-center z-10">
+                            <button onclick="goToSlide(2)" class="btn-pill bg-gradient-to-r from-lavender to-tosca hover:from-lavender-dark hover:to-tosca-dark text-white font-heading font-extrabold text-base sm:text-lg px-10 py-3.5 rounded-full shadow-lg shadow-lavender/40 flex items-center space-x-3 mx-auto">
+                                <span>MULAI BELAJAR</span>
+                                <i class="fa-solid fa-circle-play text-butter text-xl"></i>
+                            </button>
+                        </div>
+                    </div>
+                    `;
+                    break;
+
+                // SLIDE 2: MENU UTAMA
+                case 2:
+                    html = `
+                    <div class="flex-1 flex flex-col p-6 bg-slate-50 relative">
+                        <div class="text-center mb-6">
+                            <h2 class="font-heading text-2xl sm:text-3xl font-extrabold text-darkslate">MENU UTAMA PEMBELAJARAN</h2>
+                            <p class="text-xs sm:text-sm text-slate-500">Pilih topik atau aktivitas yang ingin kamu jalani!</p>
+                        </div>
+
+                        <!-- Grid Menu Cards -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-5xl mx-auto my-auto w-full">
+                            
+                            <!-- Menu 1 -->
+                            <div onclick="goToSlide(3)" class="btn-pill bg-white border-2 border-tosca/40 hover:border-tosca p-5 rounded-3xl shadow-sm hover:shadow-md cursor-pointer flex flex-col items-center text-center space-y-3 group">
+                                <div class="w-16 h-16 rounded-2xl bg-tosca-light text-tosca-dark flex items-center justify-center text-2xl group-hover:scale-110 transition">
+                                    <i class="fa-solid fa-bullseye"></i>
+                                </div>
+                                <h3 class="font-heading font-bold text-base text-darkslate">TUJUAN</h3>
+                                <p class="text-xs text-slate-500">Target kemampuan belajar yang akan dicapai.</p>
+                                <span class="bg-tosca text-white text-[10px] font-bold px-3 py-1 rounded-full">Buka Target</span>
+                            </div>
+
+                            <!-- Menu 2 -->
+                            <div onclick="goToSlide(5)" class="btn-pill bg-white border-2 border-lavender/40 hover:border-lavender p-5 rounded-3xl shadow-sm hover:shadow-md cursor-pointer flex flex-col items-center text-center space-y-3 group">
+                                <div class="w-16 h-16 rounded-2xl bg-lavender-soft text-lavender-dark flex items-center justify-center text-2xl group-hover:scale-110 transition">
+                                    <i class="fa-solid fa-book-open-reader"></i>
+                                </div>
+                                <h3 class="font-heading font-bold text-base text-darkslate">MATERI</h3>
+                                <p class="text-xs text-slate-500">5 Halaman konsep Pola & Motif Batik.</p>
+                                <span class="bg-lavender text-white text-[10px] font-bold px-3 py-1 rounded-full">Pelajari Materi</span>
+                            </div>
+
+                            <!-- Menu 3 -->
+                            <div onclick="goToSlide(4)" class="btn-pill bg-white border-2 border-softpink/40 hover:border-softpink p-5 rounded-3xl shadow-sm hover:shadow-md cursor-pointer flex flex-col items-center text-center space-y-3 group">
+                                <div class="w-16 h-16 rounded-2xl bg-softpink-light text-softpink flex items-center justify-center text-2xl group-hover:scale-110 transition">
+                                    <i class="fa-solid fa-film"></i>
+                                </div>
+                                <h3 class="font-heading font-bold text-base text-darkslate">VIDEO</h3>
+                                <p class="text-xs text-slate-500">Simulasi animasi alur ritme & pembuatan pola.</p>
+                                <span class="bg-softpink text-white text-[10px] font-bold px-3 py-1 rounded-full">Tonton Video</span>
+                            </div>
+
+                            <!-- Menu 4 -->
+                            <div onclick="goToSlide(10)" class="btn-pill bg-white border-2 border-butter-dark/40 hover:border-butter-dark p-5 rounded-3xl shadow-sm hover:shadow-md cursor-pointer flex flex-col items-center text-center space-y-3 group">
+                                <div class="w-16 h-16 rounded-2xl bg-butter text-darkslate flex items-center justify-center text-2xl group-hover:scale-110 transition">
+                                    <i class="fa-solid fa-gamepad"></i>
+                                </div>
+                                <h3 class="font-heading font-bold text-base text-darkslate">KUIS INTERAKTIF</h3>
+                                <p class="text-xs text-slate-500">5 Soal evaluasi pemahaman bermakna.</p>
+                                <span class="bg-butter-dark text-white text-[10px] font-bold px-3 py-1 rounded-full">Mulai Kuis</span>
+                            </div>
+
+                        </div>
+                    </div>
+                    `;
+                    break;
+
+                // SLIDE 3: TUJUAN PEMBELAJARAN
+                case 3:
+                    html = `
+                    <div class="flex-1 flex flex-col p-6 bg-slate-50">
+                        <div class="flex justify-between items-center mb-4">
+                            <div>
+                                <h2 class="font-heading text-2xl font-extrabold text-darkslate">TUJUAN PEMBELAJARAN</h2>
+                                <p class="text-xs text-slate-500">Target Capaian Pembelajaran Seni Rupa Kelas 5 (Fase C)</p>
+                            </div>
+                            <button onclick="goToSlide(5)" class="btn-pill bg-lavender text-white px-4 py-2 rounded-full text-xs font-bold flex items-center space-x-2">
+                                <span>MULAI MATERI</span>
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </button>
+                        </div>
+
+                        <!-- 3 Infographic Cards -->
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 my-auto max-w-5xl mx-auto w-full">
+                            <!-- TP 1 -->
+                            <div class="bg-white border border-slate-200 rounded-3xl p-5 shadow-sm hover:shadow-md transition flex flex-col justify-between">
+                                <div>
+                                    <div class="w-10 h-10 rounded-2xl bg-tosca text-white flex items-center justify-center font-extrabold text-sm mb-3">
+                                        TP 1
+                                    </div>
+                                    <h3 class="font-heading font-bold text-sm text-darkslate mb-2">Mengidentifikasi Pola & Ritme</h3>
+                                    <p class="text-xs text-slate-600 leading-relaxed">
+                                        Peserta didik mampu mengidentifikasi pengertian <strong class="text-tosca-dark">pola (pengulangan teratur)</strong> dan <strong class="text-tosca-dark">ritme (kesan irama visual)</strong> dalam karya seni rupa secara tepat.
+                                    </p>
+                                </div>
+                                <div class="mt-4 pt-3 border-t border-slate-100 flex items-center text-[11px] text-slate-400 font-semibold">
+                                    <i class="fa-solid fa-circle-check text-tosca mr-1.5"></i> Evaluasi: Kuis Soal 1 & 2
+                                </div>
+                            </div>
+
+                            <!-- TP 2 -->
+                            <div class="bg-white border border-slate-200 rounded-3xl p-5 shadow-sm hover:shadow-md transition flex flex-col justify-between">
+                                <div>
+                                    <div class="w-10 h-10 rounded-2xl bg-lavender text-white flex items-center justify-center font-extrabold text-sm mb-3">
+                                        TP 2
+                                    </div>
+                                    <h3 class="font-heading font-bold text-sm text-darkslate mb-2">Menganalisis Motif Batik Nusantara</h3>
+                                    <p class="text-xs text-slate-600 leading-relaxed">
+                                        Peserta didik dapat menganalisis bentuk pola geometris dan ritme organik pada <strong class="text-lavender-dark">Batik Kawung, Mega Mendung, dan Truntum</strong> secara cermat.
+                                    </p>
+                                </div>
+                                <div class="mt-4 pt-3 border-t border-slate-100 flex items-center text-[11px] text-slate-400 font-semibold">
+                                    <i class="fa-solid fa-circle-check text-lavender mr-1.5"></i> Evaluasi: Kuis Soal 3 & 4
+                                </div>
+                            </div>
+
+                            <!-- TP 3 -->
+                            <div class="bg-white border border-slate-200 rounded-3xl p-5 shadow-sm hover:shadow-md transition flex flex-col justify-between">
+                                <div>
+                                    <div class="w-10 h-10 rounded-2xl bg-softpink text-white flex items-center justify-center font-extrabold text-sm mb-3">
+                                        TP 3
+                                    </div>
+                                    <h3 class="font-heading font-bold text-sm text-darkslate mb-2">Menerapkan Prinsip Visual</h3>
+                                    <p class="text-xs text-slate-600 leading-relaxed">
+                                        Peserta didik mampu menjelaskan serta menerapkan prinsip <strong class="text-softpink">pengulangan teratur dan keseimbangan ritme</strong> dalam susunan visual sederhana.
+                                    </p>
+                                </div>
+                                <div class="mt-4 pt-3 border-t border-slate-100 flex items-center text-[11px] text-slate-400 font-semibold">
+                                    <i class="fa-solid fa-circle-check text-softpink mr-1.5"></i> Evaluasi: Kuis Soal 5
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    `;
+                    break;
+
+                // SLIDE 4: VIDEO PEMBELAJARAN
+                case 4:
+                    html = `
+                    <div class="flex-1 flex flex-col p-5 bg-slate-50">
+                        <div class="flex justify-between items-center mb-3">
+                            <div>
+                                <h2 class="font-heading text-xl font-extrabold text-darkslate">VIDEO SIMULASI PEMBELAJARAN</h2>
+                                <p class="text-xs text-slate-500">Visualisasi Eksplorasi Pola dan Ritme Motif Batik Nusantara</p>
+                            </div>
+                            <button onclick="goToSlide(5)" class="btn-pill bg-lavender text-white px-3.5 py-1.5 rounded-full text-xs font-bold flex items-center space-x-1.5">
+                                <span>LANJUT KE MATERI</span>
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </button>
+                        </div>
+
+                        <!-- Video Player Frame Simulation -->
+                        <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 flex-1 items-center max-w-5xl mx-auto w-full">
+                            <!-- Player Box -->
+                            <div class="lg:col-span-2 bg-slate-900 rounded-3xl p-3 shadow-lg flex flex-col relative overflow-hidden group">
+                                <div class="relative w-full aspect-video bg-black rounded-2xl overflow-hidden flex items-center justify-center">
+                                    <!-- Video Canvas Simulator -->
+                                    <canvas id="video-sim-canvas" class="w-full h-full object-cover"></canvas>
+                                    
+                                    <!-- Overlay Play Button -->
+                                    <div id="video-play-overlay" onclick="toggleVideoSim()" class="absolute inset-0 bg-black/40 flex flex-col items-center justify-center cursor-pointer hover:bg-black/30 transition">
+                                        <div class="w-16 h-16 rounded-full bg-lavender/90 text-white flex items-center justify-center text-2xl shadow-xl group-hover:scale-110 transition">
+                                            <i id="vid-btn-icon" class="fa-solid fa-play ml-1"></i>
+                                        </div>
+                                        <span class="mt-2 text-xs text-white font-bold tracking-wider">KLIK UNTUK MEMUTAR SIMULASI</span>
+                                    </div>
+                                </div>
+
+                                <!-- Control Bar -->
+                                <div class="mt-2 px-2 flex items-center justify-between text-white text-xs">
+                                    <div class="flex items-center space-x-3">
+                                        <button onclick="toggleVideoSim()" class="hover:text-butter transition">
+                                            <i id="vid-control-icon" class="fa-solid fa-play"></i>
+                                        </button>
+                                        <span id="vid-time" class="font-mono text-[11px] text-slate-300">00:00 / 00:15</span>
+                                    </div>
+                                    <div class="w-1/2 bg-slate-700 h-1.5 rounded-full overflow-hidden cursor-pointer" onclick="scrubVideo(event)">
+                                        <div id="vid-progress" class="bg-tosca h-full w-0 transition-all duration-200"></div>
+                                    </div>
+                                    <span class="text-[10px] bg-slate-800 px-2 py-0.5 rounded text-butter">HD Canvas 60FPS</span>
+                                </div>
+                            </div>
+
+                            <!-- Video Description Box -->
+                            <div class="bg-white border border-slate-200 rounded-3xl p-4 shadow-sm flex flex-col justify-between h-full">
+                                <div>
+                                    <span class="bg-butter text-darkslate text-[10px] font-bold px-2.5 py-0.5 rounded-full uppercase">Catatan Edukasi</span>
+                                    <h3 class="font-heading font-bold text-base text-darkslate mt-2">Prinsip Pengulangan & Alur Visual</h3>
+                                    <p class="text-xs text-slate-600 mt-2 leading-relaxed">
+                                        Dalam video ini, kamu dapat mengamati secara langsung bagaimana elemen dasar titik dan garis disusun secara berulang membentuk <strong class="text-lavender font-bold">pola teratur</strong>, lalu bertransisi membentuk <strong class="text-tosca font-bold">ritme alur dinamis</strong>.
+                                    </p>
+                                </div>
+                                <div class="bg-lavender-soft p-3 rounded-2xl border border-lavender/20 mt-3">
+                                    <p class="text-[11px] text-slate-700 italic">
+                                        <i class="fa-solid fa-lightbulb text-butter-dark mr-1"></i> Perhatikan perubahan arah garis saat animasi berjalan!
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    `;
+                    setTimeout(initVideoSim, 50);
+                    break;
+
+                // SLIDE 5: MATERI 1 - APA ITU POLA?
+                case 5:
+                    html = `
+                    <div class="flex-1 flex flex-col p-6 bg-slate-50">
+                        <div class="flex justify-between items-center mb-3">
+                            <span class="bg-lavender-soft text-lavender-dark font-extrabold text-xs px-3 py-1 rounded-full border border-lavender/20">MATERI 1 DARI 5</span>
+                            <div class="flex space-x-2">
+                                <button onclick="goToSlide(2)" class="bg-slate-200 hover:bg-slate-300 text-slate-700 px-3 py-1 rounded-full text-xs font-bold">MENU</button>
+                                <button onclick="goToSlide(6)" class="bg-lavender text-white px-3 py-1 rounded-full text-xs font-bold">LANJUT <i class="fa-solid fa-arrow-right ml-1"></i></button>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-auto max-w-5xl mx-auto w-full items-center">
+                            <!-- Explanation Left -->
+                            <div class="space-y-4">
+                                <h2 class="font-heading text-2xl sm:text-3xl font-extrabold text-darkslate">Apa Itu Pola dalam Seni Rupa?</h2>
+                                <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                                    <strong class="text-lavender font-bold">Pola (Pattern)</strong> adalah bentuk susunan teratur yang dihasilkan oleh pengulangan elemen visual seperti garis, bentuk geometris, atau warna secara berulang-ulang dan konsisten.
+                                </p>
+                                <div class="bg-butter/50 border border-butter-dark/30 p-3.5 rounded-2xl text-xs text-slate-700">
+                                    <p class="font-bold text-darkslate mb-1"><i class="fa-solid fa-magnifying-glass text-lavender mr-1"></i> Contoh di Sekitar Kita:</p>
+                                    <p>Ubin lantai, susunan batu bata dinding, serta kain sarung tenun dan batik Nusantara!</p>
+                                </div>
+                            </div>
+
+                            <!-- Interactive Pattern Sandbox Right -->
+                            <div class="bg-white border-2 border-lavender/30 rounded-3xl p-5 shadow-md flex flex-col items-center">
+                                <h3 class="font-heading font-bold text-xs text-slate-400 uppercase tracking-wider mb-3">Simulasi Sandbox Pola Interaktif</h3>
+                                
+                                <div id="pattern-container" class="grid grid-cols-4 gap-2 w-full max-w-xs p-3 bg-slate-100 rounded-2xl mb-4 transition-all">
+                                    <!-- Dynamic Pattern Boxes injected by JS -->
+                                </div>
+
+                                <div class="flex flex-wrap gap-2 justify-center">
+                                    <button onclick="changePatternStyle('circle')" class="btn-pill bg-lavender text-white px-3 py-1 rounded-full text-xs font-bold">Bentuk Lingkaran</button>
+                                    <button onclick="changePatternStyle('diamond')" class="btn-pill bg-tosca text-white px-3 py-1 rounded-full text-xs font-bold">Bentuk Belah Ketupat</button>
+                                    <button onclick="togglePatternColor()" class="btn-pill bg-softpink text-white px-3 py-1 rounded-full text-xs font-bold">Ganti Warna Pola</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    `;
+                    setTimeout(initPatternSandbox, 50);
+                    break;
+
+                // SLIDE 6: MATERI 2 - MENGALIR BERSAMA RITME
+                case 6:
+                    html = `
+                    <div class="flex-1 flex flex-col p-6 bg-slate-50">
+                        <div class="flex justify-between items-center mb-3">
+                            <span class="bg-tosca-light text-tosca-dark font-extrabold text-xs px-3 py-1 rounded-full border border-tosca/20">MATERI 2 DARI 5</span>
+                            <div class="flex space-x-2">
+                                <button onclick="goToSlide(5)" class="bg-slate-200 hover:bg-slate-300 text-slate-700 px-3 py-1 rounded-full text-xs font-bold">KEMBALI</button>
+                                <button onclick="goToSlide(7)" class="bg-lavender text-white px-3 py-1 rounded-full text-xs font-bold">LANJUT <i class="fa-solid fa-arrow-right ml-1"></i></button>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-auto max-w-5xl mx-auto w-full items-center">
+                            <!-- Explanation Left -->
+                            <div class="space-y-4">
+                                <h2 class="font-heading text-2xl sm:text-3xl font-extrabold text-darkslate">Mengalir Bersama Ritme Visual</h2>
+                                <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                                    <strong class="text-tosca-dark font-bold">Ritme (Irama Visual)</strong> adalah pengulangan elemen visual yang menciptakan alur gerakan mata saat melihat suatu karya seni.
+                                </p>
+                                <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                                    Sama seperti nada dalam musik yang naik dan turun secara teratur, ritme dalam seni rupa bisa bersifat <strong class="text-lavender font-bold">konstan, bertahap (gradasi), atau bergelombang dinamis</strong>.
+                                </p>
+                            </div>
+
+                            <!-- Rhythm Flow Wave Interactive Canvas -->
+                            <div class="bg-white border-2 border-tosca/30 rounded-3xl p-4 shadow-md flex flex-col items-center">
+                                <h3 class="font-heading font-bold text-xs text-slate-400 uppercase tracking-wider mb-2">Simulasi Irama Visual Gelombang</h3>
+                                <canvas id="rhythm-canvas" width="340" height="180" class="w-full bg-slate-900 rounded-2xl shadow-inner mb-3"></canvas>
+                                
+                                <div class="flex items-center space-x-3 w-full max-w-xs">
+                                    <span class="text-xs font-bold text-slate-500">Kecepatan:</span>
+                                    <input type="range" id="rhythm-speed" min="1" max="5" value="2" oninput="updateRhythmSpeed(this.value)" class="w-full accent-tosca">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    `;
+                    setTimeout(initRhythmCanvas, 50);
+                    break;
+
+                // SLIDE 7: MATERI 3 - BATIK KAWUNG
+                case 7:
+                    html = `
+                    <div class="flex-1 flex flex-col p-6 bg-slate-50">
+                        <div class="flex justify-between items-center mb-3">
+                            <span class="bg-lavender-soft text-lavender-dark font-extrabold text-xs px-3 py-1 rounded-full border border-lavender/20">MATERI 3 DARI 5</span>
+                            <div class="flex space-x-2">
+                                <button onclick="goToSlide(6)" class="bg-slate-200 hover:bg-slate-300 text-slate-700 px-3 py-1 rounded-full text-xs font-bold">KEMBALI</button>
+                                <button onclick="goToSlide(8)" class="bg-lavender text-white px-3 py-1 rounded-full text-xs font-bold">LANJUT <i class="fa-solid fa-arrow-right ml-1"></i></button>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-auto max-w-5xl mx-auto w-full items-center">
+                            <!-- Explanation Left -->
+                            <div class="space-y-3">
+                                <span class="bg-butter text-darkslate text-[10px] font-bold px-2.5 py-0.5 rounded-full">Pola Geometris Simetris</span>
+                                <h2 class="font-heading text-2xl sm:text-3xl font-extrabold text-darkslate">Motif Batik Kawung</h2>
+                                <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                                    Batik Kawung adalah motif klasik Jawa yang terbentuk dari pola geometris empat lingkaran/oval berpusat yang saling bersentuhan.
+                                </p>
+                                <p class="text-xs text-slate-500 leading-relaxed">
+                                    Bentuk ini terinspirasi dari irisan <strong class="text-lavender font-bold">buah kolang-kaling</strong>. Polanya melambangkan keseimbangan, kesucian, dan keteraturan hidup.
+                                </p>
+                            </div>
+
+                            <!-- Interactive SVG Batik Kawung Viewer -->
+                            <div class="bg-white border-2 border-lavender/30 rounded-3xl p-4 shadow-md flex flex-col items-center">
+                                <div id="kawung-svg-wrapper" class="w-full max-w-[260px] aspect-square bg-slate-100 rounded-2xl p-2 flex items-center justify-center relative overflow-hidden">
+                                    <!-- Batik Kawung SVG -->
+                                    <svg viewBox="0 0 200 200" class="w-full h-full">
+                                        <!-- Grid Overlay Lines -->
+                                        <g id="kawung-grid" class="stroke-lavender/40" stroke-width="1" stroke-dasharray="4" opacity="0">
+                                            <line x1="0" y1="100" x2="200" y2="100"/>
+                                            <line x1="100" y1="0" x2="100" y2="200"/>
+                                            <rect x="25" y="25" width="150" height="150" fill="none"/>
+                                        </g>
+                                        <!-- Kawung Oval Petals -->
+                                        <g id="kawung-petals" fill="#8A70D6" stroke="#ffffff" stroke-width="2">
+                                            <ellipse cx="60" cy="100" rx="35" ry="20" transform="rotate(0 60 100)"/>
+                                            <ellipse cx="140" cy="100" rx="35" ry="20" transform="rotate(0 140 100)"/>
+                                            <ellipse cx="100" cy="60" rx="20" ry="35" transform="rotate(0 100 60)"/>
+                                            <ellipse cx="100" cy="140" rx="20" ry="35" transform="rotate(0 100 140)"/>
+                                            <!-- Inner Cross dots -->
+                                            <circle cx="100" cy="100" r="8" fill="#FFF59D"/>
+                                            <circle cx="60" cy="100" r="4" fill="#ffffff"/>
+                                            <circle cx="140" cy="100" r="4" fill="#ffffff"/>
+                                            <circle cx="100" cy="60" r="4" fill="#ffffff"/>
+                                            <circle cx="100" cy="140" r="4" fill="#ffffff"/>
+                                        </g>
+                                    </svg>
+                                </div>
+
+                                <div class="mt-3 flex space-x-2">
+                                    <button onclick="toggleKawungGrid()" class="btn-pill bg-lavender text-white px-3 py-1 rounded-full text-xs font-bold">
+                                        <i class="fa-solid fa-border-all mr-1"></i> Toggle Grid Kisi
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    `;
+                    break;
+
+                // SLIDE 8: MATERI 4 - BATIK MEGA MENDUNG
+                case 8:
+                    html = `
+                    <div class="flex-1 flex flex-col p-6 bg-slate-50">
+                        <div class="flex justify-between items-center mb-3">
+                            <span class="bg-tosca-light text-tosca-dark font-extrabold text-xs px-3 py-1 rounded-full border border-tosca/20">MATERI 4 DARI 5</span>
+                            <div class="flex space-x-2">
+                                <button onclick="goToSlide(7)" class="bg-slate-200 hover:bg-slate-300 text-slate-700 px-3 py-1 rounded-full text-xs font-bold">KEMBALI</button>
+                                <button onclick="goToSlide(9)" class="bg-lavender text-white px-3 py-1 rounded-full text-xs font-bold">LANJUT <i class="fa-solid fa-arrow-right ml-1"></i></button>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-auto max-w-5xl mx-auto w-full items-center">
+                            <!-- Explanation Left -->
+                            <div class="space-y-3">
+                                <span class="bg-softpink text-white text-[10px] font-bold px-2.5 py-0.5 rounded-full">Ritme Dinamis Organik</span>
+                                <h2 class="font-heading text-2xl sm:text-3xl font-extrabold text-darkslate">Batik Mega Mendung</h2>
+                                <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                                    Motif khas Cirebon ini menampilkan ritme berupa <strong class="text-tosca-dark font-bold">garis awan bergelombang</strong> yang tersusun secara bertahap (gradasi warna).
+                                </p>
+                                <p class="text-xs text-slate-500 leading-relaxed">
+                                    Perubahan ukuran dari kecil ke besar serta tingkatan warna memberikan kesan ritme dinamis bagaikan awan yang terus bergerak sejuk di langit.
+                                </p>
+                            </div>
+
+                            <!-- Interactive SVG Mega Mendung Cloud Viewer -->
+                            <div class="bg-white border-2 border-tosca/30 rounded-3xl p-4 shadow-md flex flex-col items-center">
+                                <div class="w-full max-w-[280px] aspect-video bg-slate-900 rounded-2xl p-2 flex items-center justify-center overflow-hidden">
+                                    <svg viewBox="0 0 200 120" class="w-full h-full">
+                                        <!-- Cloud Layer 1 (Dark Blue Outer) -->
+                                        <path id="cloud-l1" d="M 20 80 Q 50 20 100 50 Q 150 20 180 80 Z" fill="#1E3A8A"/>
+                                        <!-- Cloud Layer 2 (Cyan Middle) -->
+                                        <path id="cloud-l2" d="M 35 75 Q 60 30 100 55 Q 140 30 165 75 Z" fill="#3B82F6"/>
+                                        <!-- Cloud Layer 3 (Soft Blue Inner) -->
+                                        <path id="cloud-l3" d="M 50 70 Q 70 40 100 60 Q 130 40 150 70 Z" fill="#93C5FD"/>
+                                        <!-- Inner Highlight -->
+                                        <path d="M 70 68 Q 85 50 100 62 Q 115 50 130 68 Z" fill="#FFFFFF"/>
+                                    </svg>
+                                </div>
+
+                                <div class="mt-3 flex items-center space-x-2 w-full max-w-xs">
+                                    <span class="text-[11px] font-bold text-slate-500">Gradasi Warna:</span>
+                                    <button onclick="shiftMegaMendungColors()" class="btn-pill bg-tosca text-white px-3 py-1 rounded-full text-xs font-bold w-full">Ganti Palet Warna Awan</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    `;
+                    break;
+
+                // SLIDE 9: MATERI 5 - BATIK TRUNTUM
+                case 9:
+                    html = `
+                    <div class="flex-1 flex flex-col p-6 bg-slate-50">
+                        <div class="flex justify-between items-center mb-3">
+                            <span class="bg-butter-dark text-white font-extrabold text-xs px-3 py-1 rounded-full">MATERI 5 DARI 5</span>
+                            <div class="flex space-x-2">
+                                <button onclick="goToSlide(8)" class="bg-slate-200 hover:bg-slate-300 text-slate-700 px-3 py-1 rounded-full text-xs font-bold">KEMBALI</button>
+                                <button onclick="goToSlide(10)" class="bg-butter-dark text-white px-4 py-1 rounded-full text-xs font-bold">MENU KUIS <i class="fa-solid fa-gamepad ml-1"></i></button>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-auto max-w-5xl mx-auto w-full items-center">
+                            <!-- Explanation Left -->
+                            <div class="space-y-3">
+                                <span class="bg-butter text-darkslate text-[10px] font-bold px-2.5 py-0.5 rounded-full">Pola & Ritme Keseimbangan</span>
+                                <h2 class="font-heading text-2xl sm:text-3xl font-extrabold text-darkslate">Motif Batik Truntum</h2>
+                                <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                                    Batik Truntum menggambarkan keindahan taburan <strong class="text-butter-dark font-bold">bintang-bintang kecil di malam hari</strong> yang bersemi kembali.
+                                </p>
+                                <p class="text-xs text-slate-500 leading-relaxed">
+                                    Pengulangan motif bunga bintang berukuran kecil yang tersebar rapat dan seimbang menciptakan suasana ritme visual yang tenang, harmonis, dan tulus.
+                                </p>
+                            </div>
+
+                            <!-- Interactive SVG Batik Truntum Viewer -->
+                            <div class="bg-white border-2 border-butter-dark/30 rounded-3xl p-4 shadow-md flex flex-col items-center">
+                                <div class="w-full max-w-[260px] aspect-square bg-darkslate rounded-2xl p-3 flex items-center justify-center relative overflow-hidden">
+                                    <svg viewBox="0 0 100 100" class="w-full h-full">
+                                        <!-- Grid of small truntum stars -->
+                                        <g fill="#FFF59D" stroke="#E5A93C" stroke-width="0.5">
+                                            <!-- Row 1 -->
+                                            <path d="M 20 20 L 22 15 L 24 20 L 29 22 L 24 24 L 22 29 L 20 24 L 15 22 Z"/>
+                                            <path d="M 50 20 L 52 15 L 54 20 L 59 22 L 54 24 L 52 29 L 50 24 L 45 22 Z"/>
+                                            <path d="M 80 20 L 82 15 L 84 20 L 89 22 L 84 24 L 82 29 L 80 24 L 75 22 Z"/>
+                                            <!-- Row 2 -->
+                                            <path d="M 35 50 L 37 45 L 39 50 L 44 52 L 39 54 L 37 59 L 35 54 L 30 52 Z"/>
+                                            <path d="M 65 50 L 67 45 L 69 50 L 74 52 L 69 54 L 67 59 L 65 54 L 60 52 Z"/>
+                                            <!-- Row 3 -->
+                                            <path d="M 20 80 L 22 75 L 24 80 L 29 82 L 24 84 L 22 89 L 20 84 L 15 82 Z"/>
+                                            <path d="M 50 80 L 52 75 L 54 80 L 59 82 L 54 84 L 52 89 L 50 84 L 45 82 Z"/>
+                                            <path d="M 80 80 L 82 75 L 84 80 L 89 82 L 84 84 L 82 89 L 80 84 L 75 82 Z"/>
+                                        </g>
+                                    </svg>
+                                </div>
+                                <p class="text-[11px] text-slate-500 mt-2 font-semibold">Pengulangan Motif Bintang Rapat & Harmonism</p>
+                            </div>
+                        </div>
+                    </div>
+                    `;
+                    break;
+
+                // QUIZ SLIDES SYSTEM (SLIDES 10 to 24)
+                default:
+                    if (slideNum >= 10 && slideNum <= 24) {
+                        html = renderQuizBranchSlide(slideNum);
+                    } else if (slideNum === 25) {
+                        html = renderCompletionSlide();
+                    }
+                    break;
+            }
+
+            viewport.innerHTML = html;
+            currentSlide = slideNum;
+            updateNavButtonsState();
+        }
+
+        // Render branching logic for Quiz slides (Question -> Correct Resp / Wrong Resp)
+        function renderQuizBranchSlide(slideNum) {
+            // Map slide numbers:
+            // Q1: 10 (Question), 11 (Correct), 12 (Wrong)
+            // Q2: 13 (Question), 14 (Correct), 15 (Wrong)
+            // Q3: 16 (Question), 17 (Correct), 18 (Wrong)
+            // Q4: 19 (Question), 20 (Correct), 21 (Wrong)
+            // Q5: 22 (Question), 23 (Correct), 24 (Wrong)
+            
+            const qIndex = Math.floor((slideNum - 10) / 3);
+            const subType = (slideNum - 10) % 3; // 0 = Question, 1 = Correct, 2 = Wrong
+            const qData = quizData[qIndex];
+
+            // 1. QUESTION SCREEN (subType === 0)
+            if (subType === 0) {
+                return `
+                <div class="flex-1 flex flex-col p-6 bg-slate-50">
+                    <div class="flex justify-between items-center mb-4">
+                        <span class="bg-butter text-darkslate font-extrabold text-xs px-3.5 py-1 rounded-full shadow-sm">
+                            SOAL EVALUASI ${qIndex + 1} DARI 5
+                        </span>
+                        <span class="text-xs font-bold text-slate-400">Skor Real-Time: ${userScore} Pts</span>
+                    </div>
+
+                    <div class="max-w-3xl mx-auto my-auto w-full bg-white border-2 border-lavender/30 rounded-3xl p-6 shadow-md space-y-5">
+                        <div class="space-y-2">
+                            <span class="text-[10px] font-extrabold text-lavender uppercase tracking-wider">Pertanyaan ${qIndex + 1}</span>
+                            <h3 class="font-heading font-bold text-base sm:text-lg text-darkslate leading-snug">
+                                ${qData.question}
+                            </h3>
+                        </div>
+
+                        <!-- Options List -->
+                        <div class="space-y-3">
+                            ${qData.options.map(opt => `
+                                <button onclick="selectQuizAnswer(${qIndex}, '${opt.key}', ${opt.correct})" class="btn-pill w-full bg-slate-50 hover:bg-lavender-soft border-2 border-slate-200 hover:border-lavender p-3.5 rounded-2xl flex items-center justify-between text-left transition group">
+                                    <div class="flex items-center space-x-3">
+                                        <div class="w-8 h-8 rounded-xl bg-slate-200 group-hover:bg-lavender group-hover:text-white font-extrabold text-xs flex items-center justify-center transition">
+                                            ${opt.key}
+                                        </div>
+                                        <span class="text-xs sm:text-sm font-semibold text-slate-700 group-hover:text-darkslate">${opt.text}</span>
+                                    </div>
+                                    <i class="fa-solid fa-chevron-right text-slate-300 group-hover:text-lavender transition"></i>
+                                </button>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+                `;
+            }
+
+            // 2. CORRECT RESPONSE SCREEN (subType === 1)
+            else if (subType === 1) {
+                const nextSlideTarget = (qIndex < 4) ? (10 + (qIndex + 1) * 3) : 25;
+                return `
+                <div class="flex-1 flex flex-col p-6 bg-emerald-50/60">
+                    <div class="max-w-2xl mx-auto my-auto w-full bg-white border-2 border-emerald-300 rounded-3xl p-6 shadow-lg text-center space-y-4">
+                        <div class="w-16 h-16 rounded-full bg-emerald-100 text-emerald-500 flex items-center justify-center text-3xl mx-auto shadow-inner">
+                            <i class="fa-solid fa-circle-check"></i>
+                        </div>
+                        <h2 class="font-heading text-2xl font-black text-emerald-700">HEBAT! JAWABANMU BENAR!</h2>
+                        <div class="bg-emerald-50 p-4 rounded-2xl border border-emerald-200 text-left space-y-1">
+                            <p class="text-xs font-bold text-emerald-800">Penjelasan Pembelajaran:</p>
+                            <p class="text-xs text-emerald-950 leading-relaxed">${qData.explanation}</p>
+                        </div>
+                        <div class="pt-2">
+                            <button onclick="goToSlide(${nextSlideTarget})" class="btn-pill bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-8 py-3 rounded-full text-xs shadow-md">
+                                ${qIndex < 4 ? 'LANJUT KE SOAL BERIKUTNYA <i class="fa-solid fa-arrow-right ml-1"></i>' : 'LIHAT HASIL PENYELESAIAN <i class="fa-solid fa-trophy ml-1"></i>'}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                `;
+            }
+
+            // 3. WRONG RESPONSE SCREEN (subType === 2)
+            else if (subType === 2) {
+                const questionSlideTarget = 10 + qIndex * 3;
+                return `
+                <div class="flex-1 flex flex-col p-6 bg-rose-50/60">
+                    <div class="max-w-2xl mx-auto my-auto w-full bg-white border-2 border-rose-300 rounded-3xl p-6 shadow-lg text-center space-y-4">
+                        <div class="w-16 h-16 rounded-full bg-rose-100 text-rose-500 flex items-center justify-center text-3xl mx-auto shadow-inner">
+                            <i class="fa-solid fa-circle-xmark"></i>
+                        </div>
+                        <h2 class="font-heading text-xl font-black text-rose-700">HAMPIR TEPAT! YUK COBA LAGI</h2>
+                        <div class="bg-rose-50 p-4 rounded-2xl border border-rose-200 text-left space-y-1">
+                            <p class="text-xs font-bold text-rose-800"><i class="fa-solid fa-lightbulb text-butter-dark mr-1"></i> Petunjuk Evaluasi:</p>
+                            <p class="text-xs text-rose-950 leading-relaxed">${qData.hint}</p>
+                        </div>
+                        <div class="pt-2 flex justify-center space-x-3">
+                            <button onclick="goToSlide(${questionSlideTarget})" class="btn-pill bg-rose-500 hover:bg-rose-600 text-white font-bold px-6 py-2.5 rounded-full text-xs shadow-md">
+                                <i class="fa-solid fa-rotate-left mr-1"></i> COBA LAGI SOAL INI
+                            </button>
+                            <button onclick="goToSlide(${qData.materialSlide})" class="btn-pill bg-slate-700 hover:bg-slate-800 text-white font-bold px-6 py-2.5 rounded-full text-xs shadow-md">
+                                <i class="fa-solid fa-book-open mr-1"></i> PELAJARI MATERI
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                `;
+            }
+        }
+
+        // Handle answer click in Quiz
+        function selectQuizAnswer(qIndex, optionKey, isCorrect) {
+            quizAnswers[qIndex] = optionKey;
+            
+            if (isCorrect) {
+                if (!answeredQuestions[qIndex]) {
+                    userScore += 20; // 20 points per question
+                    answeredQuestions[qIndex] = true;
+                }
+                playSound('correct');
+                goToSlide(10 + qIndex * 3 + 1); // Go to Correct Screen
+            } else {
+                playSound('wrong');
+                goToSlide(10 + qIndex * 3 + 2); // Go to Wrong Screen
+            }
+        }
+
+        // SLIDE 25: HALAMAN PENYELESAIAN & HASH KELAYAKAN
+        function renderCompletionSlide() {
+            playSound('victory');
+            const stars = userScore >= 80 ? 3 : userScore >= 60 ? 2 : 1;
+            
+            return `
+            <div class="flex-1 flex flex-col p-6 bg-gradient-to-br from-lavender-soft via-white to-tosca-light relative overflow-hidden">
+                <div class="max-w-2xl mx-auto my-auto w-full bg-white/95 border-2 border-lavender/40 rounded-3xl p-6 shadow-xl text-center space-y-4 backdrop-blur-md">
+                    
+                    <div class="inline-block bg-butter text-darkslate text-xs font-black px-4 py-1 rounded-full uppercase tracking-wider border border-butter-dark/30">
+                        PENCAPAIAN PEMBELAJARAN
+                    </div>
+
+                    <h2 class="font-heading text-3xl font-black text-darkslate">SELAMAT! KAMU BERHASIL!</h2>
+                    <p class="text-xs text-slate-500">Telah menyelesaikan Media Pembelajaran Interaktif Pola & Ritme Batik Nusantara</p>
+
+                    <!-- Star Rating Display -->
+                    <div class="flex justify-center space-x-2 text-3xl text-butter-dark">
+                        ${[1, 2, 3].map(i => `<i class="fa-solid fa-star ${i <= stars ? 'text-amber-400 drop-shadow-md' : 'text-slate-200'}"></i>`).join('')}
+                    </div>
+
+                    <!-- Final Score Box -->
+                    <div class="bg-lavender-soft p-4 rounded-2xl border border-lavender/30 max-w-xs mx-auto">
+                        <span class="text-[10px] text-slate-400 font-bold uppercase tracking-wider">SKOR AKHIR EVALUASI</span>
+                        <div class="text-4xl font-heading font-black text-lavender-dark my-1">${userScore} <span class="text-sm font-bold text-slate-400">/ 100</span></div>
+                        <p class="text-[11px] text-slate-600 font-semibold">SD Negeri Gegunung Kulon • Kelas 5</p>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="pt-3 flex justify-center space-x-3">
+                        <button onclick="resetQuizAndReplay()" class="btn-pill bg-lavender hover:bg-lavender-dark text-white font-bold px-6 py-2.5 rounded-full text-xs shadow-md flex items-center space-x-2">
+                            <i class="fa-solid fa-rotate"></i>
+                            <span>ULANGI KUIS</span>
+                        </button>
+                        <button onclick="goToSlide(2)" class="btn-pill bg-tosca hover:bg-tosca-dark text-white font-bold px-6 py-2.5 rounded-full text-xs shadow-md flex items-center space-x-2">
+                            <i class="fa-solid fa-house"></i>
+                            <span>MENU UTAMA</span>
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+            `;
+        }
+
+        function resetQuizAndReplay() {
+            userScore = 0;
+            answeredQuestions = [false, false, false, false, false];
+            quizAnswers = [null, null, null, null, null];
+            goToSlide(10);
+        }
+
+        // SLIDE NAVIGATION CONTROLLER
+        function goToSlide(n) {
+            if (n < 1) n = 1;
+            if (n > totalSlides) n = totalSlides;
+            playSound('click');
+            renderSlide(n);
+        }
+
+        function nextSlide() {
+            if (currentSlide < totalSlides) goToSlide(currentSlide + 1);
+        }
+
+        function prevSlide() {
+            if (currentSlide > 1) goToSlide(currentSlide - 1);
+        }
+
+        function updateNavButtonsState() {
+            const btnPrev = document.getElementById('btn-prev');
+            const btnNext = document.getElementById('btn-next');
+            if (btnPrev) btnPrev.style.opacity = currentSlide === 1 ? '0.4' : '1';
+            if (btnNext) btnNext.style.opacity = currentSlide === totalSlides ? '0.4' : '1';
+        }
+
+        // --- INTERACTIVE SIMULATION LOGIC ---
+
+        // 1. Video Simulation Canvas
+        let vidSimAnimId = null;
+        let vidSimPlaying = false;
+        let vidSimTime = 0;
+
+        function initVideoSim() {
+            const canvas = document.getElementById('video-sim-canvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            canvas.width = 480;
+            canvas.height = 270;
+
+            function drawFrame() {
+                ctx.fillStyle = '#0f172a';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                // Draw moving batik patterns
+                ctx.strokeStyle = '#8A70D6';
+                ctx.lineWidth = 3;
+
+                const waveOffset = vidSimTime * 40;
+                ctx.beginPath();
+                for (let x = 0; x < canvas.width; x += 10) {
+                    const y = 135 + Math.sin((x + waveOffset) * 0.03) * 35;
+                    if (x === 0) ctx.moveTo(x, y);
+                    else ctx.lineTo(x, y);
+                }
+                ctx.stroke();
+
+                // Draw pulsing geometric circles
+                for (let i = 0; i < 4; i++) {
+                    const cx = 100 + i * 90;
+                    const radius = 20 + Math.sin(vidSimTime * 2 + i) * 6;
+                    ctx.beginPath();
+                    ctx.arc(cx, 80, radius, 0, Math.PI * 2);
+                    ctx.fillStyle = i % 2 === 0 ? '#4ECDC4' : '#FF8B94';
+                    ctx.fill();
+                }
+
+                if (vidSimPlaying) {
+                    vidSimTime += 0.03;
+                    if (vidSimTime > 15) vidSimTime = 0;
+                    const progPct = (vidSimTime / 15) * 100;
+                    const pBar = document.getElementById('vid-progress');
+                    if (pBar) pBar.style.width = `${progPct}%`;
+
+                    const tText = document.getElementById('vid-time');
+                    if (tText) tText.innerText = `00:${Math.floor(vidSimTime).toString().padStart(2, '0')} / 00:15`;
+
+                    vidSimAnimId = requestAnimationFrame(drawFrame);
+                }
+            }
+
+            drawFrame();
+        }
+
+        function toggleVideoSim() {
+            vidSimPlaying = !vidSimPlaying;
+            const overlay = document.getElementById('video-play-overlay');
+            const icon = document.getElementById('vid-control-icon');
+
+            if (vidSimPlaying) {
+                if (overlay) overlay.style.display = 'none';
+                if (icon) icon.className = 'fa-solid fa-pause';
+                playSound('click');
+                initVideoSim();
+            } else {
+                if (overlay) overlay.style.display = 'flex';
+                if (icon) icon.className = 'fa-solid fa-play';
+                if (vidSimAnimId) cancelAnimationFrame(vidSimAnimId);
+            }
+        }
+
+        function scrubVideo(e) {
+            const bar = e.currentTarget;
+            const rect = bar.getBoundingClientRect();
+            const clickX = e.clientX - rect.left;
+            const pct = clickX / rect.width;
+            vidSimTime = pct * 15;
+            initVideoSim();
+        }
+
+        // 2. Pattern Sandbox Logic (Slide 5)
+        let currentPatternShape = 'circle';
+        let currentPatternColorIdx = 0;
+        const patternColors = ['#8A70D6', '#4ECDC4', '#FF8B94', '#FBC02D'];
+
+        function initPatternSandbox() {
+            const container = document.getElementById('pattern-container');
+            if (!container) return;
+            container.innerHTML = '';
+            for (let i = 0; i < 12; i++) {
+                const box = document.createElement('div');
+                box.className = 'w-full aspect-square rounded-xl flex items-center justify-center transition-all duration-300 transform hover:scale-110 cursor-pointer shadow-sm';
+                box.style.backgroundColor = patternColors[currentPatternColorIdx];
+
+                if (currentPatternShape === 'circle') {
+                    box.style.borderRadius = '9999px';
+                } else if (currentPatternShape === 'diamond') {
+                    box.style.borderRadius = '4px';
+                    box.style.transform = 'rotate(45deg)';
+                }
+                container.appendChild(box);
+            }
+        }
+
+        function changePatternStyle(shape) {
+            currentPatternShape = shape;
+            playSound('click');
+            initPatternSandbox();
+        }
+
+        function togglePatternColor() {
+            currentPatternColorIdx = (currentPatternColorIdx + 1) % patternColors.length;
+            playSound('click');
+            initPatternSandbox();
+        }
+
+        // 3. Rhythm Canvas Logic (Slide 6)
+        let rhythmAnimId = null;
+        let rhythmSpeed = 2;
+        let rhythmTime = 0;
+
+        function initRhythmCanvas() {
+            const canvas = document.getElementById('rhythm-canvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+
+            function draw() {
+                ctx.fillStyle = '#0f172a';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                ctx.lineWidth = 3;
+                ctx.strokeStyle = '#4ECDC4';
+
+                ctx.beginPath();
+                for (let x = 0; x < canvas.width; x += 5) {
+                    const y = 90 + Math.sin((x + rhythmTime * 50) * 0.02) * 30;
+                    if (x === 0) ctx.moveTo(x, y);
+                    else ctx.lineTo(x, y);
+                }
+                ctx.stroke();
+
+                rhythmTime += 0.02 * rhythmSpeed;
+                rhythmAnimId = requestAnimationFrame(draw);
+            }
+
+            if (rhythmAnimId) cancelAnimationFrame(rhythmAnimId);
+            draw();
+        }
+
+        function updateRhythmSpeed(val) {
+            rhythmSpeed = parseFloat(val);
+        }
+
+        // 4. Batik Kawung Interactive Grid Toggle (Slide 7)
+        let kawungGridVisible = false;
+        function toggleKawungGrid() {
+            kawungGridVisible = !kawungGridVisible;
+            const grid = document.getElementById('kawung-grid');
+            if (grid) {
+                grid.style.opacity = kawungGridVisible ? '1' : '0';
+                playSound('click');
+            }
+        }
+
+        // 5. Mega Mendung Color Switcher (Slide 8)
+        let megaPaletteIdx = 0;
+        const megaPalettes = [
+            ['#1E3A8A', '#3B82F6', '#93C5FD'],
+            ['#701A75', '#C084FC', '#F0ABFC'],
+            ['#065F46', '#34D399', '#A7F3D0']
+        ];
+
+        function shiftMegaMendungColors() {
+            megaPaletteIdx = (megaPaletteIdx + 1) % megaPalettes.length;
+            const pal = megaPalettes[megaPaletteIdx];
+            const l1 = document.getElementById('cloud-l1');
+            const l2 = document.getElementById('cloud-l2');
+            const l3 = document.getElementById('cloud-l3');
+
+            if (l1 && l2 && l3) {
+                l1.setAttribute('fill', pal[0]);
+                l2.setAttribute('fill', pal[1]);
+                l3.setAttribute('fill', pal[2]);
+                playSound('click');
+            }
+        }
+
+        // KEYBOARD SHORTCUTS NAVIGATION
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === 'PageDown') {
+                nextSlide();
+            } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+                prevSlide();
+            } else if (e.key === 'Escape') {
+                goToSlide(2); // Return to Menu
+            }
+        });
+
+        // INIT APP ON LOAD
+        window.onload = function() {
+            renderSlide(1);
+        };
+    </script>
+</body>
+</html>
